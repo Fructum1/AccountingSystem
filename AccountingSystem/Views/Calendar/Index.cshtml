@@ -1,0 +1,57 @@
+﻿@model AccountingSystem.Models.ViewModels.RequestCalendarViewModel
+
+<label  class="control-label"></label>
+    <select id="selectType" class="form-control" asp-items="ViewBag.RequestType">
+    <option selected="selected">Все типы заявок</option>
+</select>
+
+<div id='calendar'></div>
+
+<div class="modal fade" id="requestModal">
+    <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="modal-title"></h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+            <div class="modal-body" id="requestModalBodyDiv"></div>             
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+            eventClick: function(info) {
+                DetailRequest(info.event.id)
+                },
+            locale: 'ru',
+            initialView: 'dayGridMonth',
+            events: '/Calendar/GetRequests',
+            headerToolbar:{
+                left: 'today prev,next',
+                center: 'title',
+                right: 'dayGridMonth,listMonth'
+            },
+            });
+            calendar.render();
+
+            $('#selectType').on("change", function(){
+                let id = this.value;
+                $.ajax({
+                    url: '/Calendar/GetRequests/'+id,
+                    type: 'POST',
+                    }).done(function(response) {
+                        var eventSources = calendar.getEventSources(); 
+                        var len = eventSources.length;
+                        for (var i = 0; i < len; i++) { 
+                            eventSources[i].remove(); 
+                        } 
+                        calendar.addEventSource(response);  
+                    });
+                }) 
+        });
+    </script>
+}

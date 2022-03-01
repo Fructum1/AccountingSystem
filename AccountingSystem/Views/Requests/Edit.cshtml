@@ -1,0 +1,52 @@
+﻿@model AccountingSystem.Models.ViewModels.RequestEditViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h4>Заявка №@Model.Id</h4>
+<hr />
+<div class="row">
+        <form asp-action="Edit">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group">
+                <label asp-for="RequestType" class="control-label"></label>
+                <select asp-for="RequestType" class="form-control" asp-items="Model.RequestTypes"></select>
+                <span asp-validation-for="RequestType" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="PortabilityDate" /> @Html.DisplayNameFor(model => model.PortabilityDate)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label"></label>
+                <input asp-for="EndDate" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Comment" class="control-label"></label>
+                <input asp-for="Comment" class="form-control" />
+                <span asp-validation-for="Comment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SubstituteEmployee" class="control-label"></label>
+                <select asp-for="SubstituteEmployee" class="form-control" asp-items="Model.UsersForSubstitute"></select>
+                <span asp-validation-for="SubstituteEmployee" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Согласующий</label>
+                <select name="approverId" class="form-control" asp-items="Model.UsersForApprove"></select>
+            </div>        
+
+            <div class="modal-user-buttons">
+    <input type="submit" value="Сохранить" class="btn btn-success" />
+    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Отмена</button>
+</div> 
+        </form>
+</div>

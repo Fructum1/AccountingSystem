@@ -1,0 +1,125 @@
+﻿@model AccountingSystem.Models.ViewModels.UserInfoViewModel
+
+@{
+    ViewData["Title"] = "GetUserList";
+}
+@if(User.IsInRole("Администратор") || User.IsInRole("Руководитель") || User.IsInRole("Директор"))
+{
+    <h3>Выберите пользователя</h3>
+    <form method ="get">
+        <div class="form-group">
+            <label  class="control-label"></label>
+            <select onchange="this.form.submit()" asp-for="Id" class="form-control" asp-items="ViewBag.Users"></select>
+        </div>
+    </form>
+}
+
+<h4>Сотрудник: @Model.Name @Model.Surname</h4>
+<hr />
+<dl class="row">
+    <dt class = "col-sm-5">
+        @Html.DisplayNameFor(model => model.Name)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.Name)
+    </dd>
+    <dt class = "col-sm-5">
+        @Html.DisplayNameFor(model => model.Surname)
+    </dt>
+    <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.Surname)
+    </dd>
+    @if (Model.Patronymic != null)
+    {
+        <dt class = "col-sm-5">
+            @Html.DisplayNameFor(model => model.Patronymic)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Patronymic)
+        </dd>
+        }
+        <dt class = "col-sm-5">
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+        <dt class = "col-sm-5">
+            @Html.DisplayNameFor(model => model.PositionNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PositionNavigation.Name)
+        </dd>
+        <dt class = "col-sm-5">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class = "col-sm-5">
+            @Html.DisplayNameFor(model => model.UnusedVacationDays)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UnusedVacationDays)
+        </dd>
+    @if (Model.UnusedVacationDaysCurrentYear > 0)
+    {
+        <dt class = "col-sm-5">
+            @Html.DisplayNameFor(model => model.UnusedVacationDaysCurrentYear)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UnusedVacationDaysCurrentYear)
+        </dd>
+        }
+        <dt class = "col-sm-5">
+            @Html.DisplayNameFor(model => model.DaysOff)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DaysOff)
+        </dd>
+        <dt class = "col-sm-5">
+            @Html.DisplayNameFor(model => model.UnitNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UnitNavigation.Name)
+        </dd>
+        <dt>@Html.DisplayNameFor(model => model.Roles)</dt>
+        <dd>
+            <ul>@foreach (Role c in Model.Roles)
+                {
+                    <li>@c.Name</li>
+                }
+            </ul>
+         </dd>
+    @if (Model.RequestsGrouping.Count > 0)
+    {
+        <dt>Заявки по статусам</dt>
+        <dd>
+            <ul>@foreach (var entry in Model.RequestsGrouping)
+                {
+                    <li>@entry.Name : @entry.Count</li>
+                }
+            </ul> 
+        </dd>
+    }
+    <hr />
+    <dd>
+        <a class="btn btn-primary" onclick="EditUser(@Model.Id)">Редактировать</a> 
+        @if (User.IsInRole("Администратор"))
+        {
+            <a class="btn btn-danger" onclick="DeleteUser(@Model.Id)">Удалить</a> 
+        }
+    </dd>
+</dl>
+
+<div class="modal fade" id="userModals">
+    <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="modal-title"></h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+            <div class="modal-body" id="userModalBodyDivs"></div>             
+        </div>
+    </div>
+</div>

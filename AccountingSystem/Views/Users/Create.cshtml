@@ -1,0 +1,98 @@
+﻿@model AccountingSystem.Models.ViewModels.UserCreateViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Регистрация пользователя</h1>
+<hr />
+<h4>Сотрудник</h4>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Surname" class="control-label"></label>
+                <input asp-for="Surname" class="form-control" />
+                <span asp-validation-for="Surname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Patronymic" class="control-label"></label>
+                <input asp-for="Patronymic" class="form-control" />
+                <span asp-validation-for="Patronymic" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+             </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <table>
+                        <tr>
+                            @{
+                                int count = 0;
+                                List<AccountingSystem.Models.AssignedRolesData> roles = ViewBag.Role;
+                                if (roles != null)
+                                {
+                                    foreach (var role in roles)
+                                    {
+                                        if (count++ % 3 == 0)
+                                        {
+                                            @:</tr><tr>
+                                        }
+                                        @:<td>
+                                <input type="checkbox"
+                               name="selectedRoles"
+                               value="@role.RoleId"
+                               @(Html.Raw(role.Assigned ? "checked=\"checked\"" : "")) />
+                                        @role.Title
+                                        @:</td>
+                                    }
+                                }
+                                @:</tr>
+                }
+                    </table>
+                </div> 
+            </div>
+            <div class="form-group">
+                <label asp-for="Position" class="control-label"></label>
+                <select asp-for="Position" class ="form-control" asp-items="ViewBag.Position"></select>
+                <span asp-validation-for="Position" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label"></label>
+                <input asp-for="PhoneNumber" class="form-control" id="phone"/>
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Unit" class="control-label"></label>
+                <select asp-for="Unit" class ="form-control" asp-items="ViewBag.Unit"></select>
+                <span asp-validation-for="Unit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Зарегистрировать" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<a href="##" onClick="history.go(-1); return false;">Назад</a>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function(){
+            $("#phone").mask("8(999) 999-9999");
+        });
+    </script>
+}

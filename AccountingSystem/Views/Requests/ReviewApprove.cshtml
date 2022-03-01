@@ -1,0 +1,83 @@
+﻿@model AccountingSystem.Models.ViewModels.RequestDetailsViewModel
+
+@{
+    ViewData["Title"] = "Review";
+}
+
+<h4>Заявка @Model.Id</h4>
+<hr />
+<dl class="row">
+        <input type="hidden" asp-for="Id" />
+        <dt class = "col-sm-5">
+            @Html.DisplayNameFor(model => model.SenderNavigation)
+        </dt>
+        <dd class = "col-sm-13">
+            @Html.DisplayFor(model => model.SenderNavigation.Name)
+        </dd>
+        <dt class = "col-sm-5">
+            @Html.DisplayNameFor(model => model.PortabilityDate)
+        </dt>
+        <dd class = "col-sm-13">
+            @Html.DisplayFor(model => model.PortabilityDate)
+        </dd>
+        <dt class = "col-sm-5">
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+        <dd class = "col-sm-13">
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+        <dt class = "col-sm-5">
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+        <dd class = "col-sm-13">
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+        <dt class = "col-sm-5">
+            @Html.DisplayNameFor(model => model.RequestTypeNavigation)
+        </dt>
+        <dd class = "col-sm-13">
+            @Html.DisplayFor(model => model.RequestTypeNavigation.Name)
+        </dd>
+        <dt class = "col-sm-5">
+            @Html.DisplayNameFor(model => model.StatusNavigation)
+        </dt>
+        <dd class = "col-sm-13">
+            @Html.DisplayFor(model => model.StatusNavigation.Name)
+        </dd>
+        <dt class = "col-sm-5">
+            @Html.DisplayNameFor(model => model.SendingDate)
+        </dt>
+        <dd class = "col-sm-13">
+            @Html.DisplayFor(model => model.SendingDate)
+        </dd>
+        <dt class = "col-sm-5">
+            @Html.DisplayNameFor(model => model.SubstituteEmployee)
+        </dt>
+        <dd class = "col-sm-13">
+            @Html.DisplayFor(model => model.SubstituteEmployee)
+        </dd>
+    @if (Model.Comment != null)
+    {
+        <dt class = "col-sm-5">
+            @Html.DisplayNameFor(model => model.Comment)
+        </dt>
+        <dd class = "col-sm-13">
+            @Html.DisplayFor(model => model.Comment)
+        </dd>  
+    }
+    @if(Model.Users != null)
+    {
+        <dt class = "col-sm-5">
+            @Html.DisplayNameFor(model => model.Users)
+        </dt>
+        @foreach(var user in Model.Users)
+        {
+        <dd class = "col-sm-13">
+            @user.Surname
+            @user.Name
+        </dd>
+        }
+    }  
+    </dl>
+<a class="btn btn-success" asp-controller="Requests" asp-action="Approve" asp-route-id="@Model.Id">Утвердить</a>
+<a class="btn btn-danger" asp-controller="Requests" asp-action="NotApprove" asp-route-id="@Model.Id">Не утвердить</a>

@@ -1,0 +1,89 @@
+﻿@model AccountingSystem.Models.User
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h4>Сотрудник: @Model.Name @Model.Surname</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" id ="toHide"/>
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Surname" class="control-label"></label>
+                    <input asp-for="Surname" class="form-control" id ="toHide"/>
+                    <span asp-validation-for="Surname" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Patronymic" class="control-label"></label>
+                    <input asp-for="Patronymic" class="form-control" id ="toHide"/>
+                    <span asp-validation-for="Patronymic" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="hidden" asp-for="Password" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Position" class="control-label"></label>
+                    <select asp-for="Position" class="form-control" id ="toHide" asp-items="ViewBag.Position"></select>
+                    <span asp-validation-for="Position" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PhoneNumber" class="control-label"></label>
+                    <input asp-for="PhoneNumber" class="form-control"  />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Unit" class="control-label"></label>
+                    <select asp-for="Unit" class="form-control" id ="toHide" asp-items="ViewBag.Unit"></select>
+                    <span asp-validation-for="Unit" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2">
+                        <table>
+                            <tr>
+                                @{
+                                    int cnt = 0;
+                                    List<AccountingSystem.Models.AssignedRolesData> roles = ViewBag.Role;
+                                    foreach (var role in roles)
+                                    {
+                                        if (cnt++ % 2 == 0)
+                                        {
+                                            @:</tr><tr>
+                                        }
+                                        @:<td>
+                                        <input type="checkbox" id ="toHide"
+                                        name="selectedRoles"
+                                        value="@role.RoleId"
+                                        @(Html.Raw(role.Assigned ? "checked=\"checked\"" : "")) />
+                                        @role.Title
+                                        @:</td>
+                                    }
+                                    @:</tr>
+
+                                }
+                        </table>
+                    </div>
+                </div>
+             <div class="form-group">
+                  <label asp-for="UnusedVacationDays" class="control-label"></label>
+                  <input asp-for="UnusedVacationDays" class="form-control"  />
+             </div>     
+             <div class="modal-user-buttons">
+                 <input type="submit" value="Сохранить" class="btn btn-success" />
+                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Отмена</button>
+            </div>     
+        </form>
+    </div>      
+</div>

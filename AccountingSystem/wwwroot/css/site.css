@@ -1,0 +1,46 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+@media (min-width: 576px) {
+  dd.col-sm-9{
+      padding-left: 90px;
+  }
+}
+
+.modal-user-buttons {
+    padding-top: 10px;
+}
+
+.error-message {
+    color: red;
+    font-size: 30px;
+}
+
+.btn-primary {
+    margin-right: 5px;
+}
+
+.btn-danger{
+    margin-right: 5px;
+}
+
+.flex-buttons {
+    align-items: flex-start;
+    display: flex;
+}

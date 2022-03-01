@@ -1,0 +1,84 @@
+﻿@model AccountingSystem.Models.Request
+
+@{
+    ViewData["Title"] = "Cancel";
+}
+
+<h3>Вы уверены?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        @if (Model.SendingDate != null)
+        {
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.SendingDate)
+            </dt>
+            <dd class = "col-sm-9">
+                @Html.DisplayFor(model => model.SendingDate)
+        </dd>
+        }
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CreationDate)
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.CreationDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PortabilityDate)
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.PortabilityDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+        @if (Model.EndDate != DateTime.MinValue)
+        {
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.EndDate)
+            </dt>
+            <dd class = "col-sm-9">
+                @Html.DisplayFor(model => model.EndDate)
+        </dd>
+        }
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Comment)
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.Comment)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SubstituteEmployee)
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.SubstituteEmployee)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.RequestTypeNavigation)
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.RequestTypeNavigation.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SenderNavigation)
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.SenderNavigation.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.StatusNavigation)
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.StatusNavigation.Name)
+        </dd>
+    </dl>
+    
+    <form asp-action="CancelConfirmed">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Отменить" class="btn btn-danger" />
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Отмена</button>
+    </form>
+</div>

@@ -1,0 +1,35 @@
+﻿@model AccountingSystem.Models.ViewModels.RequestCreateViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="validation validation-summary-valid" data-valmsg-summary="true">
+    @Html.ValidationSummary(false)
+</div>
+<h1>Создать заявку</h1>
+
+<h4>Заявка</h4>
+<hr />
+<select name="id" onchange="this.form.submit()" id ="id">
+        <option value="0">Тип заявки</option>
+        <option value="1">Заявка на отпуск</option>
+        <option value="2">Заявка на выходной в счет отпуска</option>
+        <option value="3">Заявка на выходной в счет отработки</option>
+        <option value="4">Заявка на отгул</option>
+        <option value="5">Заявка на удаленную работу</option>
+</select>
+
+<div id="partialPlaceHolder"></div>
+<a class="btn btn-primary" asp-action="GetRequestsForPerson">Назад к списку</a>
+
+
+@section Scripts {
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>$("#id").on("change", function(){
+			
+			    let url = '@Url.Action("ShowFormCreate", "Requests")' + "?id="  + $(this).val();
+			
+			    $("#partialPlaceHolder").load(url, function(){})
+			})</script>
+}

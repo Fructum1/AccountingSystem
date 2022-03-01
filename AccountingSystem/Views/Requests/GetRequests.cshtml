@@ -1,0 +1,134 @@
+﻿@model IEnumerable<AccountingSystem.Models.RequestListViewModel>
+
+@{
+    ViewData["Title"] = "GetRequestsForPerson";
+}
+@if (ViewBag.Message != null)
+{
+    <p class="error-message">&#9830;@ViewBag.Message</p>
+}
+<h1>Заявки</h1>
+
+<form method ="get">
+    <div class ="form-group">
+        <div class="row">
+        <div class="col-md-3">
+            <label class="control-label">Имя: </label>
+            <input name="name" class="form-control" />
+        </div>
+        <div class="col-md-3">
+        <label class="control-label">Фамилия: </label>
+        <input name="surname" class="form-control" />
+        </div>
+        <div class="col-md-2">
+        <label class="control-label">Отдел: </label>
+        <select name="unit" asp-items="ViewBag.Units"></select>
+        </div>
+        <div class="col-md-1">
+        <label class="control-label">Фильтр</label>
+        <button type="submit" value="Применить" class="btn btn-success">Применить</button>
+        </div>
+    </div>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                <a asp-action="GetRequests" asp-route-sortOrder="@ViewBag.NameSort">
+                    Имя
+                </a>
+            </th>
+            <th>
+                <a asp-action="GetRequests" asp-route-sortOrder="@ViewBag.SurnameSort">
+                    Фамилия
+                </a>
+            </th>
+            <th>
+                <a asp-action="GetRequests" asp-route-sortOrder="@ViewBag.TypeSort">
+                    Тип заявки
+                </a>
+            </th>
+            <th>
+                <a asp-action="GetRequests" asp-route-sortOrder="@ViewBag.UnitSort">
+                    Отдел
+                </a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndDate)
+            </th>
+            <th>
+                <a asp-action="GetRequests" asp-route-sortOrder="@ViewBag.DateSort">
+                    Дата создания
+                </a>
+            </th>
+            <th>
+                <a asp-action="GetRequests" asp-route-sortOrder="@ViewBag.StatusSort">
+                    Статус
+                </a>
+            </th>
+            <th>
+                Действия
+            </th>
+        </tr>
+    </thead>
+<tbody>
+
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Surname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestTypeNavigation.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Unit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EndDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StatusNavigation.Name)
+            </td>     
+            <td>
+                <div class="d-flex flex-row">
+                   <a class="btn btn-primary" onclick="ReviewRequest(@item.Id)">Рассмотреть</a>
+                  <a class="btn btn-primary" onclick="EditFromReview(@item.Id)">Редактировать</a> 
+              </div>            
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<div class="modal fade" id="requestsModal">
+    <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="modal-title"></h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+            <div class="modal-body" id="requestsModalBodyDiv"></div>             
+        </div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+﻿@model AccountingSystem.Models.User
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h4>Сотрудник: @Model.Name @Model.Surname</h4>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="PhoneNumber" class="control-label"></label>
+                    <input asp-for="PhoneNumber" class="form-control"  />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="modal-user-buttons">
+                    <input type="submit" value="Сохранить" class="btn btn-success" />
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Отмена</button>
+                </div>     
+        </form>
+    </div>
+</div>
+
